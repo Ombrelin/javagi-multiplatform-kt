@@ -1,40 +1,47 @@
-package io.gitlab.jfronny.javagi.example;
+package io.gitlab.jfronny.javagi.example
 
-import org.gnome.adw.Application;
-import org.gnome.adw.ApplicationWindow;
-import org.gnome.gio.ApplicationFlags;
-import org.gnome.gtk.*;
+import org.gnome.adw.Application
+import org.gnome.adw.ApplicationWindow
+import org.gnome.gio.ApplicationFlags
+import org.gnome.gtk.Align
+import org.gnome.gtk.Box
+import org.gnome.gtk.Button
+import org.gnome.gtk.Orientation
 
-public class Main {
-    private final Application app;
+class Main {
+    private val app: Application
 
-    public Main() {
-        this.app = new Application("org.gtk.example", ApplicationFlags.FLAGS_NONE);
-        app.onActivate(this::onActivate);
+    init {
+        this.app = Application("org.gtk.example", ApplicationFlags.FLAGS_NONE)
+        app.onActivate(org.gnome.gio.Application.ActivateCallback { this.onActivate() })
     }
 
-    private void onActivate() {
-        var window = new ApplicationWindow(app);
-        window.setTitle("Hello");
-        window.setDefaultSize(300, 200);
+    private fun onActivate() {
+        val window = ApplicationWindow(app)
+        window.setTitle("Hello")
+        window.setDefaultSize(300, 200)
 
-        var box = new Box(Orientation.VERTICAL, 0);
-        box.setHalign(Align.CENTER);
-        box.setValign(Align.CENTER);
+        val box = Box(Orientation.VERTICAL, 0)
+        box.setHalign(Align.CENTER)
+        box.setValign(Align.CENTER)
 
-        var button = Button.withLabel("Hello, World!");
-        button.onClicked(window::close);
+        val button = Button.withLabel("Hello, World!")
+        button.onClicked(Button.ClickedCallback { window.close() })
 
-        box.append(button);
-        window.setContent(box);
-        window.show();
+        box.append(button)
+        window.setContent(box)
+        window.show()
     }
 
-    private int run(String[] args) {
-        return app.run(args);
+    private fun run(args: Array<String>): Int {
+        return app.run(args)
     }
 
-    public static void main(String[] args) {
-        System.exit(new Main().run(args));
+    companion object {
+        @JvmStatic
+        fun main(args: Array<String>) {
+            println(Main.javaClass.canonicalName)
+            System.exit(Main().run(args))
+        }
     }
 }
