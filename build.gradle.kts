@@ -19,8 +19,14 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.jwharm.javagi:adw:0.11.2") // or gtk for pure GTK
+    implementation("io.github.jwharm.javagi:adw:0.12.0") // or gtk for pure GTK
     implementation(kotlin("stdlib-jdk8"))
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(22)
+    }
 }
 
 val os = org.gradle.internal.os.OperatingSystem.current()!!
