@@ -7,6 +7,7 @@ import org.gnome.gtk.Align
 import org.gnome.gtk.Box
 import org.gnome.gtk.Button
 import org.gnome.gtk.Orientation
+import org.kodein.di.*
 
 class Main {
     private val app: Application
@@ -17,6 +18,10 @@ class Main {
     }
 
     private fun onActivate() {
+        val di = DI {
+            bindSingleton<Greater> { DefaultGreeter() }
+        }
+
         val window = ApplicationWindow(app)
         window.setTitle("Hello")
         window.setDefaultSize(300, 200)
@@ -25,7 +30,9 @@ class Main {
         box.setHalign(Align.CENTER)
         box.setValign(Align.CENTER)
 
-        val button = Button.withLabel("Hello, World!")
+        val greeter = di.direct.instance<Greater>()
+
+        val button = Button.withLabel(greeter.getHelloWorld())
         button.onClicked(Button.ClickedCallback { window.close() })
 
         box.append(button)

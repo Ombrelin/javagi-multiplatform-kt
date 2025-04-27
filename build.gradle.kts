@@ -21,6 +21,7 @@ repositories {
 dependencies {
     implementation("io.github.jwharm.javagi:adw:0.11.2") // or gtk for pure GTK
     implementation(kotlin("stdlib-jdk8"))
+    implementation("org.kodein.di:kodein-di:7.25.0")
 }
 
 val os = org.gradle.internal.os.OperatingSystem.current()!!
